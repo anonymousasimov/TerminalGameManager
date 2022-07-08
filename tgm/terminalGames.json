@@ -1,0 +1,10 @@
+[
+  {
+    "title" : "Minesweeper",
+    "command" : "minesweeper"
+  },
+  {
+    "title" : "Snake",
+    "command" :"nsnake"
+  }
+]
