@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from copyreg import dispatch_table
 import os
 import json
 from random import gammavariate
@@ -18,6 +19,13 @@ def getGames() -> dict:
     with open(os.path.join(__location__, "terminalGames.json"), "r") as tg:
         terminalGames = json.load(tg)
     return terminalGames
+    
+def send_command(i):
+    if int(i) + 1 > len(getGames()):
+        print("selected game is invalid")
+    else:
+        selectedGame = getGames()[int(i)]
+        os.system(selectedGame["command"])
 
 def display_menu():
     titleTable = Table (
@@ -35,4 +43,29 @@ def display_menu():
 
     console.print(titleTable)
 
+def main():
+    listening = True
+    while listening:
+        cmd = input()
+        cmd = cmd.split()
+        if len(cmd) > 0:
+            if cmd[0] == "help":
+                print("There is no help atm")
+            elif cmd [0] == "quit":
+                listening = False
+            elif cmd [0] == "display":
+                display_menu()
+            elif cmd [0] == "run":
+                if len(cmd) == 2:
+                    send_command(cmd[1])
+                else:
+                    print("Error: unkown command. Try\nhelp")
+
+            else:
+                print("Error: unkown command. Try\nhelp")
+        else:
+           print("Error: unkown command. Try\nhelp")
+
+
 display_menu()
+main()
