@@ -27,6 +27,14 @@ def send_command(i):
         selectedGame = getGames()[int(i)]
         os.system(selectedGame["command"])
 
+def display_help():
+    print("\nUsage: COMMAND [ARGS]\n")
+    print("\nCommands:\n")
+    print("help" + " " * 16 + "Displays this help message")
+    print("quit" + " " * 16 + "Quits this script")
+    print("run [ARGUMENT]" + " " * 6 + "Runs the game selected\n " + " " * 19 + "(Select a game by using it's id as run's argument)")
+
+
 def display_menu():
     titleTable = Table (
         style = "#E1AD01",
@@ -50,7 +58,7 @@ def main():
         cmd = cmd.split()
         if len(cmd) > 0:
             if cmd[0] == "help":
-                print("There is no help atm")
+                display_help()
             elif cmd [0] == "quit":
                 listening = False
             elif cmd [0] == "display":
