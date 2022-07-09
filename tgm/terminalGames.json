@@ -6,5 +6,25 @@
   {
     "title" : "Snake",
     "command" :"nsnake"
+  },
+  {
+    "title" : "Pacman",
+    "command" : "myman"
+  },
+  {
+    "title" : "Sudoku",
+    "command" : "nudoku"
+  },
+  {
+    "title" : "Space Invaders",
+    "command" : "ninvaders"
+  },
+  {
+    "title" : "Hangman",
+    "command" : "hangman"
+  },
+  {
+    "title" : "Chess",
+    "command" : "gnuchess -g"
   }
 ]
