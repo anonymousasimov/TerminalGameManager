@@ -33,7 +33,8 @@ def display_help():
     print("help" + " " * 16 + "Displays this help message")
     print("quit" + " " * 16 + "Quits this script")
     print("run [ARGUMENT]" + " " * 6 + "Runs the game selected\n " + " " * 19 + "(Select a game by using it's id as run's argument)")
-
+    print("display" + " " * 13 + "Displays the list of installed terminal games.")
+    print("\n")
 
 def display_menu():
     titleTable = Table (
