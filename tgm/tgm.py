@@ -1,5 +1,6 @@
 import os
 import json
+from posixpath import expanduser
 import typer
 
 from rich.console import Console
@@ -11,21 +12,24 @@ from pyfiglet import figlet_format as pyfig
 console = Console()
 app = typer.Typer()
 
-def getGames() -> dict:
-    __location__ = os.path.realpath(
-        os.path.join(os.getcwd(), os.path.dirname(__file__))
-    )
-    with open(os.path.join(__location__, "terminalGames.json"), "r") as tg:
-        terminalGames = json.load(tg)
-    return terminalGames
+def write_terminalGames(data: dict) -> None:
+    with open(os.path.join(terminalGames_path, "terminalGames.json"), "w") as of:
+        of.write(json.dumps(data, indent=2))
+
+@app.command(short_help="Adds an new game to the manager")
+def add(title: str, command: str) -> None:
+    new_game = {"title": title, "command": command}
+    terminalGames["terminalGames"].append(new_game)
+    write_terminalGames(terminalGames)
+    print("Added " + title +" to the manager")
+    display()
 
 @app.command(short_help="Runs the selected terminal game") 
 def start(game_id: int) -> None:
-    gameList = getGames()
-    if game_id + 1 > len(gameList):
+    if game_id + 1 > len(terminalGames["terminalGames"]):
         print("selected game is invalid")
     else:
-        selectedGame = gameList[game_id]
+        selectedGame = terminalGames["terminalGames"][game_id]
         os.system(selectedGame["command"])
 
 @app.command(short_help="Display list of terminal games")
@@ -39,11 +43,26 @@ def display():
     titleTable.add_column("id", style="#E1AD01")
 
     i = 0
-    for game in getGames():
+    for game in terminalGames["terminalGames"]:
         titleTable.add_row(game["title"],str(i))
         i += 1
 
     console.print(titleTable)
 
-if __name__ == "__main__":
+def main():
+    global terminalGames_path
+    terminalGames_path = os.path.join(expanduser("~"), ".config", "TerminalGameManager")
+    if not os.path.exists(terminalGames_path):
+        os.makedirs(terminalGames_path)
+        tg = {}
+        tg["terminalGames"] = []
+        write_terminalGames(tg)
+
+    tg_file = open(os.path.join(terminalGames_path, "terminalGames.json"))
+    global terminalGames
+    terminalGames = json.load(tg_file)
+
+
     app()
+
+main()
