@@ -1,8 +1,6 @@
-#!/usr/bin/python
-from copyreg import dispatch_table
 import os
 import json
-from random import gammavariate
+import typer
 
 from rich.console import Console
 from rich.table import Table
@@ -11,6 +9,7 @@ from rich import box
 from pyfiglet import figlet_format as pyfig
 
 console = Console()
+app = typer.Typer()
 
 def getGames() -> dict:
     __location__ = os.path.realpath(
@@ -19,24 +18,18 @@ def getGames() -> dict:
     with open(os.path.join(__location__, "terminalGames.json"), "r") as tg:
         terminalGames = json.load(tg)
     return terminalGames
-    
-def send_command(i):
-    if int(i) + 1 > len(getGames()):
+
+@app.command(short_help="Runs the selected terminal game") 
+def start(game_id: int) -> None:
+    gameList = getGames()
+    if game_id + 1 > len(gameList):
         print("selected game is invalid")
     else:
-        selectedGame = getGames()[int(i)]
+        selectedGame = gameList[game_id]
         os.system(selectedGame["command"])
 
-def display_help():
-    print("\nUsage: COMMAND [ARGS]\n")
-    print("\nCommands:\n")
-    print("help" + " " * 16 + "Displays this help message")
-    print("quit" + " " * 16 + "Quits this script")
-    print("run [ARGUMENT]" + " " * 6 + "Runs the game selected\n " + " " * 19 + "(Select a game by using it's id as run's argument)")
-    print("display" + " " * 13 + "Displays the list of installed terminal games.")
-    print("\n")
-
-def display_menu():
+@app.command(short_help="Display list of terminal games")
+def display():
     titleTable = Table (
         style = "#E1AD01",
         box=box.SIMPLE_HEAVY, 
@@ -52,29 +45,5 @@ def display_menu():
 
     console.print(titleTable)
 
-def main():
-    listening = True
-    while listening:
-        cmd = input()
-        cmd = cmd.split()
-        if len(cmd) > 0:
-            if cmd[0] == "help":
-                display_help()
-            elif cmd [0] == "quit":
-                listening = False
-            elif cmd [0] == "display":
-                display_menu()
-            elif cmd [0] == "run":
-                if len(cmd) == 2:
-                    send_command(cmd[1])
-                else:
-                    print("Error: unkown command. Try\nhelp")
-
-            else:
-                print("Error: unkown command. Try\nhelp")
-        else:
-           print("Error: unkown command. Try\nhelp")
-
-
-display_menu()
-main()
+if __name__ == "__main__":
+    app()
