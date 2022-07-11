@@ -34,3 +34,4 @@ the following command to it:
 ```
 
 Then restart your terminal. You can now run the cli using the command 'tgm'.
+Run tgm --help for help.
