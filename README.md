@@ -27,3 +27,11 @@ Once all the required packages are installed type the following commands:
   cd ~
   git clone "https://github.com/anonymousasimov/TerminalGameManager.git"
 ```
+Then open your ~/.bashrc file in an editor of your choice and add<br>
+the following command to it:
+
+```bash
+  alias tgm='python ~/TerminalGameManager/tgm/tgm.py'
+```
+
+Then restart your terminal. You can now run the cli using the command 'tgm'.
