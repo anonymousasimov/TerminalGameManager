@@ -6,7 +6,6 @@ This program requires the following python modules to function:<br>
 - rich
 - typer
 - pyfiglet
-- posixpath
 <br>
 To install these use:
 
