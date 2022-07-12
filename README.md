@@ -30,7 +30,7 @@ Then open your ~/.bashrc file in an editor of your choice and add<br>
 the following command to it:
 
 ```bash
-  alias tgm='python ~/TerminalGameManager/tgm/tgm.py'
+  alias tgm='~/TerminalGameManager/tgm/tgm'
 ```
 
 Then restart your terminal. You can now run the cli using the command 'tgm'.
