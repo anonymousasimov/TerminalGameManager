@@ -52,8 +52,9 @@ def display():
     console.print(titleTable)
 
 @app.callback(invoke_without_command=True)
-def initial():
-    display()
+def initial(ctx: typer.Context):
+    if ctx.invoked_subcommand is None:
+        display()
 
 def main():
     global terminalGames_path
