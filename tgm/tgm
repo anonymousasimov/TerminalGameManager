@@ -26,12 +26,20 @@ def add(title: str, command: str) -> None:
     print("Added " + title +" to the manager")
     display()
 
-@app.command(short_help="Runs the selected terminal game") 
-def start(game_id: int) -> None:
-    if game_id + 1 > len(terminalGames["terminalGames"]):
+@app.command(short_help="Removes game from the manager")
+def remove(index: int) -> None:
+    if index + 1 > len(terminalGames["terminalGames"]):
         print("selected game is invalid")
     else:
-        selectedGame = terminalGames["terminalGames"][game_id]
+        del terminalGames["terminalGames"][index]
+        write_terminalGames(terminalGames)
+
+@app.command(short_help="Runs the selected terminal game") 
+def start(index: int) -> None:
+    if index + 1 > len(terminalGames["terminalGames"]):
+        print("selected game is invalid")
+    else:
+        selectedGame = terminalGames["terminalGames"][index]
         os.system(selectedGame["command"])
 
 @app.command(short_help="Display list of terminal games")
