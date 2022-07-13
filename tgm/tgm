@@ -51,6 +51,10 @@ def display():
 
     console.print(titleTable)
 
+@app.callback(invoke_without_command=True)
+def initial():
+    display()
+
 def main():
     global terminalGames_path
     terminalGames_path = os.path.join(expanduser("~"), ".config", "TerminalGameManager")
